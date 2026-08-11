@@ -9,6 +9,7 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "setup": "node scripts/setup.js",
+    "setup-wizard": "node scripts/setup-wizard.js",
     "vercel:login": "vercel login",
     "vercel:deploy": "vercel --prod",
     "vercel:preview": "vercel"

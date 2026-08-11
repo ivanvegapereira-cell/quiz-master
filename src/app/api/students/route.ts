@@ -15,11 +15,8 @@ export async function GET(request: NextRequest) {
     }
 
     const { data, error } = await supabase
-      .from('quizzes')
-      .select(`
-        *,
-        questions:questions(count)
-      `)
+      .from('students')
+      .select('*')
       .eq('teacher_id', session.user.id)
       .order('created_at', { ascending: false })
 
@@ -27,9 +24,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ success: true, data })
   } catch (error) {
-    console.error('Error fetching quizzes:', error)
+    console.error('Error fetching students:', error)
     return NextResponse.json(
-      { success: false, error: 'Failed to fetch quizzes' },
+      { success: false, error: 'Failed to fetch students' },
       { status: 500 }
     )
   }
@@ -49,25 +46,22 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { title, description, subject, duration } = body
+    const { name, group_id } = body
 
-    if (!title || typeof title !== 'string') {
+    if (!name || typeof name !== 'string') {
       return NextResponse.json(
-        { success: false, error: 'Title is required' },
+        { success: false, error: 'Name is required' },
         { status: 400 }
       )
     }
 
     const { data, error } = await supabase
-      .from('quizzes')
+      .from('students')
       .insert([
         {
           teacher_id: session.user.id,
-          title: title.trim(),
-          description: description || null,
-          subject: subject || null,
-          duration: duration || null,
-          is_public: false,
+          name: name.trim(),
+          group_id: group_id || null,
         },
       ])
       .select()
@@ -77,9 +71,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, data }, { status: 201 })
   } catch (error) {
-    console.error('Error creating quiz:', error)
+    console.error('Error creating student:', error)
     return NextResponse.json(
-      { success: false, error: 'Failed to create quiz' },
+      { success: false, error: 'Failed to create student' },
       { status: 500 }
     )
   }

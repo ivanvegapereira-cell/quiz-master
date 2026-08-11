@@ -1,0 +1,52 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "nodeVersion": "18.x",
+  "env": [
+    {
+      "key": "NEXT_PUBLIC_SUPABASE_URL",
+      "description": "Supabase Project URL",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+      "description": "Supabase Anon Key",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "SUPABASE_SERVICE_ROLE_KEY",
+      "description": "Supabase Service Role Key",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "ANTHROPIC_API_KEY",
+      "description": "Anthropic/Claude API Key",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "NEXT_PUBLIC_APP_URL",
+      "description": "Application URL",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "regions": ["sfo1"],
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/dashboard",
+      "statusCode": 307
+    }
+  ]
+}

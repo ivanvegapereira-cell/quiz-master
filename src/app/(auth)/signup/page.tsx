@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Mail, Lock, User, AlertCircle, Loader } from 'lucide-react'
+import { Mail, Lock, User, AlertCircle, Loader, Check } from 'lucide-react'
+import { useAuth } from '@/hooks/useAuth'
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -11,8 +12,9 @@ export default function SignupPage() {
     password: '',
     confirmPassword: '',
   })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [localError, setLocalError] = useState('')
+  const [success, setSuccess] = useState(false)
+  const { register, loading, error } = useAuth()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -23,30 +25,51 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError('')
+    setLocalError('')
+
+    if (!formData.name || !formData.email || !formData.password) {
+      setLocalError('Por favor completa todos los campos')
+      return
+    }
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Las contraseñas no coinciden')
+      setLocalError('Las contraseñas no coinciden')
       return
     }
 
     if (formData.password.length < 8) {
-      setError('La contraseña debe tener al menos 8 caracteres')
+      setLocalError('La contraseña debe tener al menos 8 caracteres')
       return
     }
 
-    setLoading(true)
-
-    try {
-      // TODO: Integrar con Supabase Auth
-      console.log('Signup attempt:', formData)
-      // await supabase.auth.signUp({ email: formData.email, password: formData.password })
-    } catch (err) {
-      setError('Error al crear la cuenta. Intenta nuevamente.')
-      console.error(err)
-    } finally {
-      setLoading(false)
+    const result = await register(formData.email, formData.password, formData.name)
+    if (result) {
+      setSuccess(true)
+      setFormData({ name: '', email: '', password: '', confirmPassword: '' })
     }
+  }
+
+  const displayError = localError || error
+
+  if (success) {
+    return (
+      <div className="w-full max-w-md">
+        <div className="card p-8 text-center">
+          <div className="flex justify-center mb-4">
+            <div className="w-16 h-16 bg-success-100 dark:bg-success-900/30 rounded-full flex items-center justify-center">
+              <Check className="w-8 h-8 text-success-600" />
+            </div>
+          </div>
+          <h1 className="text-2xl font-bold mb-2">¡Cuenta Creada!</h1>
+          <p className="text-slate-600 dark:text-slate-400 mb-6">
+            Revisa tu email para confirmar tu cuenta antes de iniciar sesión.
+          </p>
+          <Link href="/auth/login">
+            <button className="btn-primary w-full">Ir a Login</button>
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -55,10 +78,10 @@ export default function SignupPage() {
         <h1 className="text-3xl font-bold mb-2">Crear Cuenta</h1>
         <p className="text-slate-600 dark:text-slate-400 mb-8">Únete a QuizMaster y comienza a crear actividades</p>
 
-        {error && (
+        {displayError && (
           <div className="mb-6 p-4 bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-lg flex gap-3">
             <AlertCircle className="w-5 h-5 text-danger-600 flex-shrink-0" />
-            <p className="text-danger-700 dark:text-danger-300 text-sm">{error}</p>
+            <p className="text-danger-700 dark:text-danger-300 text-sm">{displayError}</p>
           </div>
         )}
 

@@ -3,29 +3,27 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Mail, Lock, AlertCircle, Loader } from 'lucide-react'
+import { useAuth } from '@/hooks/useAuth'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [localError, setLocalError] = useState('')
+  const { login, loading, error } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError('')
-    setLoading(true)
+    setLocalError('')
 
-    try {
-      // TODO: Integrar con Supabase Auth
-      console.log('Login attempt:', { email, password })
-      // await supabase.auth.signInWithPassword({ email, password })
-    } catch (err) {
-      setError('Error al iniciar sesión. Intenta nuevamente.')
-      console.error(err)
-    } finally {
-      setLoading(false)
+    if (!email || !password) {
+      setLocalError('Por favor completa todos los campos')
+      return
     }
+
+    await login(email, password)
   }
+
+  const displayError = localError || error
 
   return (
     <div className="w-full max-w-md">
@@ -33,10 +31,10 @@ export default function LoginPage() {
         <h1 className="text-3xl font-bold mb-2">Bienvenido</h1>
         <p className="text-slate-600 dark:text-slate-400 mb-8">Inicia sesión en tu cuenta QuizMaster</p>
 
-        {error && (
+        {displayError && (
           <div className="mb-6 p-4 bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-lg flex gap-3">
             <AlertCircle className="w-5 h-5 text-danger-600 flex-shrink-0" />
-            <p className="text-danger-700 dark:text-danger-300 text-sm">{error}</p>
+            <p className="text-danger-700 dark:text-danger-300 text-sm">{displayError}</p>
           </div>
         )}
 

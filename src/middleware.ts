@@ -1,9 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
-const protectedRoutes = ['/dashboard', '/quiz', '/students', '/rewards', '/ai-assistant', '/reports', '/settings']
-const authRoutes = ['/auth/login', '/auth/signup']
-
-export async function middleware(request: NextRequest) {
+export async function middleware(_: NextRequest) {
   // Middleware temporarily disabled for debugging
   return NextResponse.next()
 }

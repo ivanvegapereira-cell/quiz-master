@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { Moon, Sun, LogOut, Menu, X } from 'lucide-react'
 import { useState } from 'react'
-import { Button } from '@/components/ui/Button'
 
 interface NavbarProps {
   userName?: string

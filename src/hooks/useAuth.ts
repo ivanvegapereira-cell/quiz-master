@@ -69,7 +69,7 @@ export function useAuth() {
     try {
       const result = await signUp(email, password, name)
       if (!result.success) {
-        setError(result.error?.message || 'Error al crear cuenta')
+        setError(typeof result.error === 'string' ? result.error : 'Error al crear cuenta')
         return false
       }
       setError('Revisa tu email para confirmar tu cuenta')

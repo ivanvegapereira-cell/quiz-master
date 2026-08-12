@@ -52,7 +52,7 @@ Return the questions in this JSON format:
   }
 ]`
 
-  const message = await client.messages.create({
+  const message = await (client as any).messages.create({
     model: 'claude-opus-4-1',
     max_tokens: 4096,
     messages: [
@@ -105,7 +105,7 @@ Create a supportive, encouraging guide that:
 Write the guide in Spanish and make it suitable for a student of ${params.level} level.
 The response should be well-formatted and easy to read.`
 
-  const message = await client.messages.create({
+  const message = await (client as any).messages.create({
     model: 'claude-opus-4-1',
     max_tokens: 2048,
     messages: [

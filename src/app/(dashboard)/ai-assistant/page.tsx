@@ -17,7 +17,7 @@ export default function AIAssistantPage() {
   const [formData, setFormData] = useState({
     subject: 'Matemática',
     level: 'Básico',
-    numberOfQuestions: 5,
+    numberOfQuestions: '5',
     topic: 'Geometría',
   })
 

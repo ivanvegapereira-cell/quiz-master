@@ -42,15 +42,15 @@
   }
 
   .badge-success {
-    @apply bg-success-50 dark:bg-success-900/20 text-success-700 dark:text-success-300;
+    @apply bg-green-50 dark:bg-slate-800 text-green-700 dark:text-green-300;
   }
 
   .badge-warning {
-    @apply bg-warning-50 dark:bg-warning-900/20 text-warning-700 dark:text-warning-300;
+    @apply bg-amber-50 dark:bg-slate-800 text-amber-700 dark:text-amber-300;
   }
 
   .badge-danger {
-    @apply bg-danger-50 dark:bg-danger-900/20 text-danger-700 dark:text-danger-300;
+    @apply bg-red-50 dark:bg-slate-800 text-red-700 dark:text-red-300;
   }
 }
 

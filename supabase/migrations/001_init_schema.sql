@@ -14,7 +14,7 @@ create table public.users (
 
 -- Create student_groups table
 create table public.student_groups (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   teacher_id uuid not null references public.users(id) on delete cascade,
   name text not null,
   description text,
@@ -24,7 +24,7 @@ create table public.student_groups (
 
 -- Create students table
 create table public.students (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   teacher_id uuid not null references public.users(id) on delete cascade,
   name text not null,
   group_id uuid references public.student_groups(id) on delete set null,
@@ -34,7 +34,7 @@ create table public.students (
 
 -- Create quizzes table
 create table public.quizzes (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   teacher_id uuid not null references public.users(id) on delete cascade,
   title text not null,
   description text,
@@ -47,7 +47,7 @@ create table public.quizzes (
 
 -- Create questions table
 create table public.questions (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   quiz_id uuid not null references public.quizzes(id) on delete cascade,
   text text not null,
   type text not null check (type in ('multiple_choice', 'true_false')),
@@ -58,7 +58,7 @@ create table public.questions (
 
 -- Create question_options table
 create table public.question_options (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   question_id uuid not null references public.questions(id) on delete cascade,
   text text not null,
   is_correct boolean default false,
@@ -67,7 +67,7 @@ create table public.question_options (
 
 -- Create live_sessions table
 create table public.live_sessions (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   quiz_id uuid not null references public.quizzes(id) on delete cascade,
   teacher_id uuid not null references public.users(id) on delete cascade,
   started_at timestamp with time zone default timezone('utc'::text, now()) not null,
@@ -80,7 +80,7 @@ create table public.live_sessions (
 
 -- Create student_answers table
 create table public.student_answers (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   session_id uuid not null references public.live_sessions(id) on delete cascade,
   student_id uuid not null references public.students(id) on delete cascade,
   question_id uuid not null references public.questions(id) on delete cascade,
@@ -93,7 +93,7 @@ create table public.student_answers (
 
 -- Create leaderboards table
 create table public.leaderboards (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   session_id uuid not null references public.live_sessions(id) on delete cascade,
   student_id uuid not null references public.students(id) on delete cascade,
   total_points integer default 0,
@@ -103,7 +103,7 @@ create table public.leaderboards (
 
 -- Create rewards table
 create table public.rewards (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   teacher_id uuid not null references public.users(id) on delete cascade,
   name text not null,
   description text,
@@ -115,7 +115,7 @@ create table public.rewards (
 
 -- Create reward_transactions table
 create table public.reward_transactions (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   student_id uuid not null references public.students(id) on delete cascade,
   reward_id uuid not null references public.rewards(id) on delete cascade,
   redeemed_at timestamp with time zone default timezone('utc'::text, now()) not null,
@@ -124,7 +124,7 @@ create table public.reward_transactions (
 
 -- Create student_feedback_guides table
 create table public.student_feedback_guides (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   session_id uuid not null references public.live_sessions(id) on delete cascade,
   student_id uuid not null references public.students(id) on delete cascade,
   guide_content text not null,

@@ -48,7 +48,7 @@ export function useAuth() {
     try {
       const result = await signIn(email, password)
       if (!result.success) {
-        setError(result.error?.message || 'Error al iniciar sesión')
+        setError(typeof result.error === 'string' ? result.error : 'Error al iniciar sesión')
         return false
       }
       const currentUser = await getCurrentUser()

@@ -5,18 +5,20 @@ const authRoutes = ['/auth/login', '/auth/signup']
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const token = request.cookies.get('auth-token')?.value
+
+  // Check for Supabase session cookie
+  const supabaseSession = request.cookies.get('sb-mjpaqdtuawygodyiblni-auth-token')?.value
 
   // Rutas protegidas
   if (protectedRoutes.some(route => pathname.startsWith(route))) {
-    if (!token) {
+    if (!supabaseSession) {
       return NextResponse.redirect(new URL('/auth/login', request.url))
     }
   }
 
-  // Rutas de auth - redirigir a dashboard si ya tiene token
+  // Rutas de auth - redirigir a dashboard si ya tiene sesión
   if (authRoutes.some(route => pathname.startsWith(route))) {
-    if (token) {
+    if (supabaseSession) {
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }
   }

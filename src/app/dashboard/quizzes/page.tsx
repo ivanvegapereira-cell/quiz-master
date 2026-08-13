@@ -1,14 +1,24 @@
 'use client'
 
 import Link from 'next/link'
-import { BookOpen, Plus, Eye, Edit2, Trash2 } from 'lucide-react'
+import { BookOpen, Plus, Eye, Edit2, Trash2, Play, Copy, Check } from 'lucide-react'
+import { useState } from 'react'
 
 export default function QuizzesPage() {
-  const quizzes = [
+  const [quizzes] = useState([
     { id: 1, title: 'Matemática Básica', questions: 10, published: '2026-08-01', status: 'active' },
     { id: 2, title: 'Historia de Chile', questions: 15, published: '2026-08-02', status: 'active' },
     { id: 3, title: 'Inglés Intermedio', questions: 12, published: '2026-08-03', status: 'draft' },
-  ]
+  ])
+
+  const [copied, setCopied] = useState<number | null>(null)
+
+  const copySessionCode = (id: number) => {
+    const code = Math.random().toString(36).substring(2, 8).toUpperCase()
+    navigator.clipboard.writeText(code)
+    setCopied(id)
+    setTimeout(() => setCopied(null), 2000)
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
@@ -58,6 +68,14 @@ export default function QuizzesPage() {
                 <button className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded hover:bg-blue-200 dark:hover:bg-blue-900/30 text-sm"><Eye className="w-4 h-4" />Ver</button>
                 <button className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-sm"><Edit2 className="w-4 h-4" />Editar</button>
                 <button className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded hover:bg-red-200 dark:hover:bg-red-900/30 text-sm"><Trash2 className="w-4 h-4" /></button>
+              </div>
+
+              {/* Live Session */}
+              <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+                <button className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                  <Play className="w-4 h-4" />
+                  Iniciar Sesión en Vivo
+                </button>
               </div>
             </div>
           ))}

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { BookOpen, Plus, Eye, Edit2, Trash2, Play, Copy, Check } from 'lucide-react'
+import { BookOpen, Plus, Eye, Edit2, Trash2, Play, Check } from 'lucide-react'
 import { useState } from 'react'
 
 export default function QuizzesPage() {
@@ -11,14 +11,6 @@ export default function QuizzesPage() {
     { id: 3, title: 'Inglés Intermedio', questions: 12, published: '2026-08-03', status: 'draft' },
   ])
 
-  const [copied, setCopied] = useState<number | null>(null)
-
-  const copySessionCode = (id: number) => {
-    const code = Math.random().toString(36).substring(2, 8).toUpperCase()
-    navigator.clipboard.writeText(code)
-    setCopied(id)
-    setTimeout(() => setCopied(null), 2000)
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">

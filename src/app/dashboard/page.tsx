@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { BarChart3, Users, BookOpen, Trophy, Zap, Settings } from 'lucide-react'
+import { BarChart3, Users, BookOpen, Trophy, Zap } from 'lucide-react'
 
 export default function DashboardPage() {
   const [stats, setStats] = useState({

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Users, Plus, Trash2, Edit2, Search, Upload, Download, Eye, EyeOff } from 'lucide-react'
+import { Plus, Trash2, Edit2, Search, Upload, Download, Eye, EyeOff } from 'lucide-react'
 
 interface Student {
   id: number
@@ -18,12 +18,10 @@ export default function StudentsPage() {
     { id: 2, name: 'María González', email: 'maria@school.cl', password: 'Pwd234567!', group: 'Grupo B', joined: '2026-08-02' },
   ])
 
-  const [showForm, setShowForm] = useState(false)
   const [showBulkImport, setShowBulkImport] = useState(false)
   const [search, setSearch] = useState('')
   const [bulkText, setBulkText] = useState('')
   const [showPasswords, setShowPasswords] = useState<number[]>([])
-  const [csvTemplate, setCsvTemplate] = useState(false)
 
   const filteredStudents = students.filter(s =>
     s.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -111,7 +109,6 @@ Carlos López,carlos@school.cl`
                 Importar Masivo
               </button>
               <button
-                onClick={() => setShowForm(!showForm)}
                 className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <Plus className="w-5 h-5" />

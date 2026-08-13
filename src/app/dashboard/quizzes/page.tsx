@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { BookOpen, Plus, Eye, Edit2, Trash2, Play, Check } from 'lucide-react'
+import { BookOpen, Plus, Eye, Edit2, Trash2, Play } from 'lucide-react'
 import { useState } from 'react'
 
 export default function QuizzesPage() {

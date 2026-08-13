@@ -15,7 +15,7 @@ export default function LiveSessionPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [sessionCode, setSessionCode] = useState('')
   const [copied, setCopied] = useState(false)
-  const [students, setStudents] = useState<StudentScore[]>([
+  const [students] = useState<StudentScore[]>([
     { id: 1, name: 'Juan Pérez', score: 50, answered: true },
     { id: 2, name: 'María González', score: 20, answered: true },
     { id: 3, name: 'Carlos López', score: 0, answered: false },

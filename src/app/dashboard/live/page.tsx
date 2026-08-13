@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Play, Pause, SkipForward, SkipBack, X, Copy, Check } from 'lucide-react'
+import { Play, SkipForward, SkipBack, X, Copy, Check } from 'lucide-react'
 
 interface StudentScore {
   id: number
